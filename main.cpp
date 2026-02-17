@@ -24,9 +24,6 @@ int main() {
 
     cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
 
-    // auto data = arr.get_data();
-
-    // cv::Mat image(28, 28, CV_8UC1, data.data());
     auto image = Ndarray_to_Mat<uint8_t>(arr);
     cv::imshow("Display window", image);
     cv::waitKey(0);
