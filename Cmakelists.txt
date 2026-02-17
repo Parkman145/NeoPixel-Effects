@@ -11,9 +11,6 @@ FetchContent_Declare(CNDA GIT_REPOSITORY https://github.com/Parkman145/CNDA.git 
 
 FetchContent_MakeAvailable(CNDA)
 
-# Point CMake to vcpkg toolchain
-set(CMAKE_TOOLCHAIN_FILE "${VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake" CACHE STRING "Vcpkg toolchain file")
-
 # Find OpenCV
 find_package(OpenCV REQUIRED)
 message(STATUS "OpenCV version: ${OpenCV_VERSION}")
