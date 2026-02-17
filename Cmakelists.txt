@@ -16,7 +16,7 @@ find_package(OpenCV REQUIRED)
 message(STATUS "OpenCV version: ${OpenCV_VERSION}")
 
 # Add executable
-add_executable(main main.cpp)
+add_executable(main src/main.cpp)
 
 # Link OpenCV libraries
 target_link_libraries(main 
