@@ -7,22 +7,33 @@
 
 namespace NEOFX {
 
+    // A color ramp very similar to the Color Ramp node in blender
 class ColorRamp {
     public:
+    // Arguments must be passed in ascending order
     ColorRamp(std::vector<RGB> colors, std::vector<double> locations) : colors{colors}, locations{locations} {
         if (colors.size() != locations.size()) {
             throw std::invalid_argument("Size of colors and locations must match");
         }
     };
 
+    // Interpolate a color at a location. Locations 
+    // above and below the ramps bounds will be constrained to 
+    // to the highest and lowest values
     RGB operator[](double location){
         location = std::clamp(location, *locations.begin(), *(locations.end()-1));
+        
+        // Finding index of location just above the input location
         auto upper_it = std::lower_bound(locations.begin(), locations.end(), location);
         if (upper_it == locations.end()) { upper_it -= 1; }
         size_t upper_index = std::distance(locations.begin(), upper_it);
 
+        // If input location happens to be exactly on a node, simply return it
+        // Also naturally handles the case of a node not existing below the input location,
+        // since the inpput is clamped. 
         if (location == locations[upper_index]) { return colors[upper_index]; }
 
+        // Interpolate between upper and lower color
         size_t lower_index = upper_index - 1;
         RGB upper_color = colors[upper_index];
         RGB lower_color = colors[lower_index];
