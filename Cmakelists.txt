@@ -11,16 +11,30 @@ FetchContent_Declare(CNDA GIT_REPOSITORY https://github.com/Parkman145/CNDA.git 
 
 FetchContent_MakeAvailable(CNDA)
 
-# Find OpenCV
-find_package(OpenCV REQUIRED)
-message(STATUS "OpenCV version: ${OpenCV_VERSION}")
+option (BUILD_EXE "Build main executable" ON)
+option (BUILD_PYTHON "Build Python Library executable" ON)
 
-# Add executable
-add_executable(main src/main.cpp)
-
-# Link OpenCV libraries
-target_link_libraries(main 
-    PRIVATE 
-        ${OpenCV_LIBS}
-        CNDA::CNDA
+# EXE ------------------------------
+if(BUILD_EXE)
+    # Find OpenCV
+    find_package(OpenCV REQUIRED)
+    message(STATUS "OpenCV version: ${OpenCV_VERSION}")
+    # Add executable
+    add_executable(main src/main.cpp)
+    target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+    # Link OpenCV libraries
+    target_link_libraries(main 
+        PRIVATE 
+            ${OpenCV_LIBS}
+            CNDA::CNDA
 )
+endif()
+
+# Python ------------------------------
+if(BUILD_PYTHON)
+    find_package(pybind11 REQUIRED)
+    pybind11_add_module(FXLIB bindings/bindings.cpp)
+    target_include_directories(FXLIB PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+    target_link_libraries(FXLIB PRIVATE CNDA::CNDA)
+endif()
