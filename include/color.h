@@ -40,19 +40,19 @@ struct RGB {
     }
 
     
-    RGB operator+(RGB other) { return RGB(R+other.R, G+other.G, B+other.B); }
-    RGB operator-(RGB other) { return RGB(R-other.R, G-other.G, B-other.B); }
-    RGB operator*(RGB other) { return RGB(R*other.R, G*other.G, B*other.B); }
-    RGB operator/(RGB other) { return RGB(R/other.R, G/other.G, B/other.B); }
+    RGB operator+(const RGB other) const { return RGB(R+other.R, G+other.G, B+other.B); }
+    RGB operator-(const RGB other) const { return RGB(R-other.R, G-other.G, B-other.B); }
+    RGB operator*(const RGB other) const { return RGB(R*other.R, G*other.G, B*other.B); }
+    RGB operator/(const RGB other) const { return RGB(R/other.R, G/other.G, B/other.B); }
 
     template <typename T>
-    RGB operator+(T val) { return RGB(R+val, G+val, B+val); }
+    RGB operator+(T val) const { return RGB(R+val, G+val, B+val); }
     template <typename T>
-    RGB operator-(T val) { return RGB(R-val, G-val, B-val); }
+    RGB operator-(T val) const { return RGB(R-val, G-val, B-val); }
     template <typename T>
-    RGB operator*(T val) { return RGB(R*val, G*val, B*val); }
+    RGB operator*(T val) const { return RGB(R*val, G*val, B*val); }
     template <typename T>
-    RGB operator/(T val) { return RGB(R/val, G/val, B/val); }
+    RGB operator/(T val) const { return RGB(R/val, G/val, B/val); }
 
 };
 
