@@ -4,6 +4,8 @@
 #include <stdint.h>
 #include <math.h>
 #include <cmath>
+#include <string>
+#include <sstream>
 
 struct RGB {
     double R;
@@ -15,8 +17,14 @@ struct RGB {
         G{static_cast<double>(G)/255},
         B{static_cast<double>(B)/255} {}
 
-    RGB(double R, double G , double B) :  R{R}, G{G}, B{B} {}
+    friend std::ostream& operator<<(std::ostream& os, const RGB& rgb);
 
+    RGB(double R, double G , double B) :  R{R}, G{G}, B{B} {}
+        std::string str() const {
+        std::stringstream ss;
+        ss << *this;
+        return ss.str();
+    }
     
     static RGB from_HSV(double hue, double saturation, double value){
         double normalizedHue = std::fmod(hue, 1);
@@ -45,15 +53,17 @@ struct RGB {
     RGB operator*(const RGB other) const { return RGB(R*other.R, G*other.G, B*other.B); }
     RGB operator/(const RGB other) const { return RGB(R/other.R, G/other.G, B/other.B); }
 
-    template <typename T>
-    RGB operator+(T val) const { return RGB(R+val, G+val, B+val); }
-    template <typename T>
-    RGB operator-(T val) const { return RGB(R-val, G-val, B-val); }
-    template <typename T>
-    RGB operator*(T val) const { return RGB(R*val, G*val, B*val); }
-    template <typename T>
-    RGB operator/(T val) const { return RGB(R/val, G/val, B/val); }
+    RGB operator+(double val) const { return RGB(R+val, G+val, B+val); }
+    RGB operator-(double val) const { return RGB(R-val, G-val, B-val); }
+    RGB operator*(double val) const { return RGB(R*val, G*val, B*val); }
+    RGB operator/(double val) const { return RGB(R/val, G/val, B/val); }
 
 };
+
+std::ostream& operator<<(std::ostream& os, const RGB& rgb) {
+    os << "RGB[" << rgb.R << ", " << rgb.G << ", " << rgb.B << "]";
+    return os;
+}
+
 
 #endif
