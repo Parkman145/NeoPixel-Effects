@@ -3,6 +3,8 @@
 #include "CNDA/ndarray.h"
 #include "CNDA/array_utilities.h"
 #include "color.h"
+#include "effects.h"
+#include <string>
 
 template <typename T>
 cv::Mat Ndarray_to_Mat(const CNDA::Ndarray<T>& arr) {
@@ -24,18 +26,21 @@ int main() {
     
     
     cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
-    double hue = 0;
-    double hue_speed = 0.01;
-    RGB color = RGB::from_HSV(hue, 1, 1);
+    double loc = 0;
+    double speed = 0.01;
+    RGB color = RGB::from_HSV(0, 1, 1);
     auto image = cv::Mat(400, 400, CV_64FC3, cv::Scalar(color.B, color.G, color.R));
     cv::namedWindow("Display window", cv::WINDOW_NORMAL);
     
     while (true){
         
-        hue = fmod(hue+hue_speed, 1.0);
-        color = RGB::from_HSV(hue, 1, 1)/2.0;
+        loc = fmod(loc+speed, 1.0);
+        NEOFX::ColorRamp color_ramp({NEOFX::red, NEOFX::green, NEOFX::blue}, {0.0, 0.5, 1.0});
+        color = color_ramp[loc] / 2;
         image.setTo(cv::Scalar(color.B, color.G, color.R));
+        cv::putText(image,  std::to_string(loc), {0, 200}, 1, 2, cv::Scalar(1.0, 1.0, 1.0));
         cv::imshow("Display window", image);
+        std::cout << color << "\r";
 
         if (cv::waitKeyEx(30) == 27) break;
     }
