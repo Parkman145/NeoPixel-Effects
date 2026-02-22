@@ -24,6 +24,7 @@ PYBIND11_MODULE(FXLIB, m) {
     .def("__truediv__", [](const RGB& self, double other) { return self.operator/(other); })
 
     .def("__str__", &RGB::str)
+    .def("__repr__", &RGB::str)
 
     .def("from_HSV", &RGB::from_HSV)
     .def_readwrite("R", &RGB::R)
