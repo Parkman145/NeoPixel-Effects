@@ -6,6 +6,7 @@
 #include <cmath>
 #include <string>
 #include <sstream>
+#include <array>
 
 namespace NEOFX {
 
@@ -49,7 +50,10 @@ struct RGB {
         }        
     }
 
-    
+    std::array<double, 3> to_array() const {
+        return {R, G, B};
+    }
+
     RGB operator+(const RGB other) const { return RGB(R+other.R, G+other.G, B+other.B); }
     RGB operator-(const RGB other) const { return RGB(R-other.R, G-other.G, B-other.B); }
     RGB operator*(const RGB other) const { return RGB(R*other.R, G*other.G, B*other.B); }

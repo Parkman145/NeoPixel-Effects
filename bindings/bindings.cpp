@@ -11,6 +11,7 @@ PYBIND11_MODULE(FXLIB, m) {
 
     pybind11::class_<NEOFX::RGB>(m, "RGB")
     .def(py::init<double, double, double>())
+    .def("to_array", &NEOFX::RGB::to_array)
     .def("__add__", [](const NEOFX::RGB& self, const NEOFX::RGB& other) { return self.operator+(other); })
     .def("__add__", [](const NEOFX::RGB& self, double& other) { return self.operator+(other); })
 
