@@ -37,6 +37,7 @@ PYBIND11_MODULE(FXLIB, m) {
 
     m.def("solid", &NEOFX::solid);
     m.def("cycle", &NEOFX::cycle);
+    m.def("radial", &NEOFX::radial);
 
     m.attr("rainbow") = NEOFX::rainbow;
 

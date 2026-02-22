@@ -4,6 +4,7 @@
 #include "color.h"
 #include <stdexcept>
 #include <algorithm>
+#include <cmath>
 
 namespace NEOFX {
 
@@ -69,6 +70,17 @@ RGB solid(double x, double y, double t, RGB color){ return color; };
 RGB cycle(double x, double y, double t, ColorRamp ramp, double speed) {
     return ramp[std::fmod(t, 1)];
 }
+RGB radial( double x, double y, double t,
+            ColorRamp ramp,
+            double speed,
+            double scale,
+            double center_x = 0.0, double center_y = 0.0){
+    double x_dist = x-center_x;
+    double y_dist = y-center_y;
+    double distance = std::sqrtf(x_dist*x_dist+y_dist*y_dist);
+    return ramp[fmod(distance*scale+t*speed, 1)];
+}
+
 
 
 }
