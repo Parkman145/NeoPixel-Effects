@@ -1,6 +1,8 @@
-// #include "effects.h"
+#include "effects.h"
 #include <color.h>
 #include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
+#include <vector>
 
 namespace py = pybind11;
 
@@ -22,9 +24,14 @@ PYBIND11_MODULE(FXLIB, m) {
     .def("__truediv__", [](const RGB& self, double other) { return self.operator/(other); })
 
     .def("__str__", &RGB::str)
-    
+
     .def("from_HSV", &RGB::from_HSV)
     .def_readwrite("R", &RGB::R)
     .def_readwrite("G", &RGB::G)
     .def_readwrite("B", &RGB::B);
+
+    pybind11::class_<NEOFX::ColorRamp>(m, "ColorRamp")
+    .def(py::init<std::vector<RGB>, std::vector<double>>())
+    .def("__getitem__", &NEOFX::ColorRamp::operator[]);
+    
 }
