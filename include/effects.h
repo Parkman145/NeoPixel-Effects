@@ -63,6 +63,13 @@ RGB purple{0.502, 0.0, 0.502};
 RGB white{1.0, 1.0, 1.0};
 RGB black{0.0, 0.0, 0.0};
 
+ColorRamp rainbow{{red, orange, yellow, green, blue, purple, red}, {0.0, 0.16666667, 0.33333333, 0.5, 0.66666667, 0.83333333, 1.0}};
+
+RGB solid(double x, double y, double t, RGB color){ return color; };
+RGB cycle(double x, double y, double t, ColorRamp ramp, double speed) {
+    return ramp[std::fmod(t, 1)];
+}
+
 
 }
 

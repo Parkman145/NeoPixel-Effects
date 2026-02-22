@@ -35,6 +35,10 @@ PYBIND11_MODULE(FXLIB, m) {
     .def(py::init<std::vector<NEOFX::RGB>, std::vector<double>>())
     .def("__getitem__", &NEOFX::ColorRamp::operator[]);
 
+    m.def("solid", &NEOFX::solid);
+    m.def("cycle", &NEOFX::cycle);
+
+
     m.attr("red") = NEOFX::red;
     m.attr("orange") = NEOFX::orange;
     m.attr("yellow") = NEOFX::yellow;
