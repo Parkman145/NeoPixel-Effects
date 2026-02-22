@@ -38,6 +38,7 @@ PYBIND11_MODULE(FXLIB, m) {
     m.def("solid", &NEOFX::solid);
     m.def("cycle", &NEOFX::cycle);
 
+    m.attr("rainbow") = NEOFX::rainbow;
 
     m.attr("red") = NEOFX::red;
     m.attr("orange") = NEOFX::orange;
