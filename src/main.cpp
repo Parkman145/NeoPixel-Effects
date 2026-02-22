@@ -28,7 +28,7 @@ int main() {
     cv::utils::logging::setLogLevel(cv::utils::logging::LOG_LEVEL_WARNING);
     double loc = 0;
     double speed = 0.01;
-    RGB color = RGB::from_HSV(0, 1, 1);
+    NEOFX::RGB color = NEOFX::RGB::from_HSV(0, 1, 1);
     auto image = cv::Mat(400, 400, CV_64FC3, cv::Scalar(color.B, color.G, color.R));
     cv::namedWindow("Display window", cv::WINDOW_NORMAL);
     

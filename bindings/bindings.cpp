@@ -9,30 +9,30 @@ namespace py = pybind11;
 PYBIND11_MODULE(FXLIB, m) {
     m.def("Zamning", [](int a, int b) { return a + b; });
 
-    pybind11::class_<RGB>(m, "RGB")
+    pybind11::class_<NEOFX::RGB>(m, "RGB")
     .def(py::init<double, double, double>())
-    .def("__add__", [](const RGB& self, const RGB& other) { return self.operator+(other); })
-    .def("__add__", [](const RGB& self, double& other) { return self.operator+(other); })
+    .def("__add__", [](const NEOFX::RGB& self, const NEOFX::RGB& other) { return self.operator+(other); })
+    .def("__add__", [](const NEOFX::RGB& self, double& other) { return self.operator+(other); })
 
-    .def("__sub__", [](const RGB& self, const RGB& other) { return self.operator-(other); })
-    .def("__sub__", [](const RGB& self, double other) { return self.operator-(other); })
+    .def("__sub__", [](const NEOFX::RGB& self, const NEOFX::RGB& other) { return self.operator-(other); })
+    .def("__sub__", [](const NEOFX::RGB& self, double other) { return self.operator-(other); })
 
-    .def("__mul__", [](const RGB& self, const RGB& other) { return self.operator*(other); })
-    .def("__mul__", [](const RGB& self, double other) { return self.operator*(other); })
+    .def("__mul__", [](const NEOFX::RGB& self, const NEOFX::RGB& other) { return self.operator*(other); })
+    .def("__mul__", [](const NEOFX::RGB& self, double other) { return self.operator*(other); })
 
-    .def("__truediv__", [](const RGB& self, const RGB& other) { return self.operator/(other); })
-    .def("__truediv__", [](const RGB& self, double other) { return self.operator/(other); })
+    .def("__truediv__", [](const NEOFX::RGB& self, const NEOFX::RGB& other) { return self.operator/(other); })
+    .def("__truediv__", [](const NEOFX::RGB& self, double other) { return self.operator/(other); })
 
-    .def("__str__", &RGB::str)
-    .def("__repr__", &RGB::str)
+    .def("__str__", &NEOFX::RGB::str)
+    .def("__repr__", &NEOFX::RGB::str)
 
-    .def("from_HSV", &RGB::from_HSV)
-    .def_readwrite("R", &RGB::R)
-    .def_readwrite("G", &RGB::G)
-    .def_readwrite("B", &RGB::B);
+    .def("from_HSV", &NEOFX::RGB::from_HSV)
+    .def_readwrite("R", &NEOFX::RGB::R)
+    .def_readwrite("G", &NEOFX::RGB::G)
+    .def_readwrite("B", &NEOFX::RGB::B);
 
     pybind11::class_<NEOFX::ColorRamp>(m, "ColorRamp")
-    .def(py::init<std::vector<RGB>, std::vector<double>>())
+    .def(py::init<std::vector<NEOFX::RGB>, std::vector<double>>())
     .def("__getitem__", &NEOFX::ColorRamp::operator[]);
     
 }

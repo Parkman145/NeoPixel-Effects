@@ -7,6 +7,8 @@
 #include <string>
 #include <sstream>
 
+namespace NEOFX {
+
 struct RGB {
     double R;
     double G;
@@ -64,6 +66,6 @@ std::ostream& operator<<(std::ostream& os, const RGB& rgb) {
     os << "RGB[" << rgb.R << ", " << rgb.G << ", " << rgb.B << "]";
     return os;
 }
-
+}
 
 #endif
