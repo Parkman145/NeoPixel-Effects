@@ -34,5 +34,14 @@ PYBIND11_MODULE(FXLIB, m) {
     pybind11::class_<NEOFX::ColorRamp>(m, "ColorRamp")
     .def(py::init<std::vector<NEOFX::RGB>, std::vector<double>>())
     .def("__getitem__", &NEOFX::ColorRamp::operator[]);
+
+    m.attr("red") = NEOFX::red;
+    m.attr("orange") = NEOFX::orange;
+    m.attr("yellow") = NEOFX::yellow;
+    m.attr("green") = NEOFX::green;
+    m.attr("blue") = NEOFX::blue;
+    m.attr("purple") = NEOFX::purple;
+    m.attr("white") = NEOFX::white;
+    m.attr("black") = NEOFX::black;
     
 }
