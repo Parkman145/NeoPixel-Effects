@@ -5,6 +5,7 @@
 #include <stdexcept>
 #include <algorithm>
 #include <cmath>
+#include <functional>
 
 namespace NEOFX {
 
@@ -81,7 +82,48 @@ RGB radial( double x, double y, double t,
     return ramp[fmod(distance*scale+t*speed, 1)];
 }
 
+std::vector<RGB> batch_process(
+    std::function<RGB(double, double, double)> func, 
+    std::vector<double> x, 
+    std::vector<double> y, 
+    double t){
+    if (x.size() != y.size()) {
+        throw std::invalid_argument("Size of x and y must match");
+    }
 
+    std::vector<RGB> result;
+    result.reserve(x.size()); 
+    for (int i = 0; i < x.size(); i++) {
+        result.push_back(func(x[i], y[i], t));
+
+    }
+
+    return result;
+
+}
+
+
+std::vector<double> batch_process_array(
+    std::function<RGB(double, double, double)> func, 
+    std::vector<double> x, 
+    std::vector<double> y, 
+    double t){
+    if (x.size() != y.size()) {
+        throw std::invalid_argument("Size of x and y must match");
+    }
+
+    std::vector<double> result;
+    result.reserve(x.size()*3); 
+    for (int i = 0; i < x.size(); i++) {
+        RGB color = func(x[i], y[i], t);
+        result.push_back(color.R);
+        result.push_back(color.G);
+        result.push_back(color.B);
+    }
+
+    return result;
+
+}
 
 }
 
