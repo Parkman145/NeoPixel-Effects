@@ -9,6 +9,15 @@
 
 namespace NEOFX {
 
+RGB red{1.0, 0.0, 0.0};
+RGB orange{1.0, 0.647, 0.0};
+RGB yellow{1.0, 1.0, 0.0};
+RGB green{0.0, 1.0, 0.0};
+RGB blue{0.0, 0.0, 1.0};
+RGB purple{0.502, 0.0, 0.502};
+RGB white{1.0, 1.0, 1.0};
+RGB black{0.0, 0.0, 0.0};
+
     // A color ramp very similar to the Color Ramp node in blender
 class ColorRamp {
     public:
@@ -55,15 +64,6 @@ class ColorRamp {
     std::vector<RGB> colors;
     std::vector<double> locations;
 };
-
-RGB red{1.0, 0.0, 0.0};
-RGB orange{1.0, 0.647, 0.0};
-RGB yellow{1.0, 1.0, 0.0};
-RGB green{0.0, 1.0, 0.0};
-RGB blue{0.0, 0.0, 1.0};
-RGB purple{0.502, 0.0, 0.502};
-RGB white{1.0, 1.0, 1.0};
-RGB black{0.0, 0.0, 0.0};
 
 ColorRamp rainbow{{red, orange, yellow, green, blue, purple, red}, {0.0, 0.16666667, 0.33333333, 0.5, 0.66666667, 0.83333333, 1.0}};
 
