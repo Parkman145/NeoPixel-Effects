@@ -68,20 +68,33 @@ class ColorRamp {
 
 ColorRamp rainbow{{red, orange, yellow, green, blue, purple, red}, {0.0, 0.16666667, 0.33333333, 0.5, 0.66666667, 0.83333333, 1.0}};
 
-RGB solid(double x, double y, double t, RGB color){ return color; };
-RGB cycle(double x, double y, double t, ColorRamp ramp, double speed) {
-    return ramp[std::fmod(t, 1)];
-}
-RGB radial( double x, double y, double t,
-            ColorRamp ramp,
-            double speed,
-            double scale,
-            double center_x = 0.0, double center_y = 0.0){
-    double x_dist = x-center_x;
-    double y_dist = y-center_y;
-    double distance = std::sqrtf(x_dist*x_dist+y_dist*y_dist);
-    return ramp[fmod(distance*scale+t*speed, 1)];
-}
+struct solid {
+    RGB color;
+    RGB operator()(double x, double y, double t){ return color; };
+};
+
+struct cycle {
+    ColorRamp ramp;
+    double speed;
+    RGB operator()(double x, double y, double t) {
+        return ramp[std::fmod(t*speed, 1)];
+    }
+
+};
+
+struct radial {
+    ColorRamp ramp;
+    double speed;
+    double scale;
+    double center_x = 0.0;
+    double center_y = 0.0;
+    RGB operator()(double x, double y, double t) {
+        double x_dist = x-center_x;
+        double y_dist = y-center_y;
+        double distance = std::sqrtf(x_dist*x_dist+y_dist*y_dist);
+        return ramp[fmod(distance*scale+t*speed, 1)];
+    }
+};
 
 std::vector<RGB> batch_process(
     std::function<RGB(double, double, double)> func, 

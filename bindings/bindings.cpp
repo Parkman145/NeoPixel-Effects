@@ -36,9 +36,21 @@ PYBIND11_MODULE(FXLIB, m) {
     .def(py::init<std::vector<NEOFX::RGB>, std::vector<double>>())
     .def("__getitem__", &NEOFX::ColorRamp::operator[]);
 
-    m.def("solid", &NEOFX::solid);
-    m.def("cycle", &NEOFX::cycle);
-    m.def("radial", &NEOFX::radial);
+    pybind11::class_<NEOFX::solid>(m, "solid")
+    .def(py::init<NEOFX::RGB>())
+    .def("__call__", &NEOFX::solid::operator());
+
+    pybind11::class_<NEOFX::cycle>(m, "cycle")
+    .def(py::init<NEOFX::ColorRamp, double>())
+    .def("__call__", &NEOFX::cycle::operator());
+
+    pybind11::class_<NEOFX::radial>(m, "radial")
+    .def(py::init<NEOFX::ColorRamp, double, double, double, double>())
+    .def("__call__", &NEOFX::radial::operator());
+
+
+    m.def("batch_process", &NEOFX::batch_process);
+    m.def("batch_process_array", &NEOFX::batch_process_array);
 
     m.attr("rainbow") = NEOFX::rainbow;
 
