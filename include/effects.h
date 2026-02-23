@@ -22,6 +22,7 @@ RGB black{0.0, 0.0, 0.0};
 class ColorRamp {
     public:
     // Arguments must be passed in ascending order
+    ColorRamp() : colors{NEOFX::black}, locations{0.0}{};
     ColorRamp(std::vector<RGB> colors, std::vector<double> locations) : colors{colors}, locations{locations} {
         if (colors.size() != locations.size()) {
             throw std::invalid_argument("Size of colors and locations must match");
