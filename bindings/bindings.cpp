@@ -2,6 +2,7 @@
 #include <color.h>
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include <pybind11/functional.h>
 #include <vector>
 
 namespace py = pybind11;
@@ -38,15 +39,23 @@ PYBIND11_MODULE(FXLIB, m) {
 
     pybind11::class_<NEOFX::solid>(m, "solid")
     .def(py::init<NEOFX::RGB>())
-    .def("__call__", &NEOFX::solid::operator());
+    .def("__call__", &NEOFX::solid::operator())
+    .def_readwrite("color", &NEOFX::solid::color);
 
     pybind11::class_<NEOFX::cycle>(m, "cycle")
     .def(py::init<NEOFX::ColorRamp, double>())
-    .def("__call__", &NEOFX::cycle::operator());
+    .def("__call__", &NEOFX::cycle::operator())
+    .def_readwrite("ramp", &NEOFX::cycle::ramp)
+    .def_readwrite("speed", &NEOFX::cycle::speed);
 
     pybind11::class_<NEOFX::radial>(m, "radial")
     .def(py::init<NEOFX::ColorRamp, double, double, double, double>())
-    .def("__call__", &NEOFX::radial::operator());
+    .def("__call__", &NEOFX::radial::operator())
+    .def_readwrite("ramp", &NEOFX::radial::ramp)
+    .def_readwrite("speed", &NEOFX::radial::speed)
+    .def_readwrite("scale", &NEOFX::radial::scale)
+    .def_readwrite("center_x", &NEOFX::radial::center_x)
+    .def_readwrite("center_y", &NEOFX::radial::center_y);
 
 
     m.def("batch_process", &NEOFX::batch_process);
