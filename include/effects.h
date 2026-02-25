@@ -32,7 +32,7 @@ class ColorRamp {
     // Interpolate a color at a location. Locations 
     // above and below the ramps bounds will be constrained to 
     // to the highest and lowest values
-    RGB operator[](double location){
+    RGB operator[](double location) const {
         location = std::clamp(location, *locations.begin(), *(locations.end()-1));
         
         // Finding index of location just above the input location
