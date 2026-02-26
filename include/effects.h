@@ -6,6 +6,7 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
+#include <numbers>
 
 namespace NEOFX {
 
@@ -94,6 +95,26 @@ struct radial {
         double distance = std::hypot(x_dist, y_dist);
         double phase = t*speed;
         double pos = distance*scale;
+        double where = fmod(pos+phase, 1);
+        if (where < 0) { where += 1; }
+        return ramp[where];
+    }
+};
+
+struct pinwheel {
+    ColorRamp ramp;
+    double speed;
+    double scale;
+    double center_x = 0.0;
+    double center_y = 0.0;
+    double twist = 0.0;
+    RGB operator()(double x, double y, double t) {
+        double x_dist = x-center_x;
+        double y_dist = y-center_y;
+        double angle = (std::atan2(x_dist, y_dist)+std::numbers::pi)/(2*std::numbers::pi);
+        double distance = std::hypot(x_dist, y_dist);
+        double phase = t*speed;
+        double pos = angle+phase+twist*distance;
         double where = fmod(pos+phase, 1);
         if (where < 0) { where += 1; }
         return ramp[where];
