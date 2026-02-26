@@ -5,6 +5,7 @@
 #include "color.h"
 #include "effects.h"
 #include <string>
+#include <chrono>
 
 template <typename T>
 cv::Mat Ndarray_to_Mat(const CNDA::Ndarray<T>& arr) {
@@ -20,20 +21,56 @@ cv::Mat Ndarray_to_Mat(const CNDA::Ndarray<T>& arr) {
 
 }
 
+cv::Mat generate_image(std::function<NEOFX::RGB(double, double, double)> func, size_t res_width, size_t res_height, double scale, double t) {
+    
+    int type = CV_MAKETYPE(cv::DataType<double>::type, 3);
+
+    cv::Mat output(res_width, res_height, type);  
+
+    for (size_t i = 0; i < res_width; i++) {
+        double x = (static_cast<double>(i)-(res_width/2)) / scale;
+        for (size_t j = 0; j < res_height; j++) {
+        double y = (static_cast<double>(j)-(res_height/2)) / scale;
+            NEOFX::RGB color = func(x, y, t);
+            
+            output.at<cv::Vec3d>(j, i) = cv::Vec3d(color.B, color.G, color.R);
+
+        }
+    }
+
+    return output;
+
+
+}
+
 
 int main() {
-    
-    std::vector<double> x{0.0, 0.0, 1.0, 1.0};
-    std::vector<double> y{0.0, 1.0, 0.0, 1.0};
+    size_t res_width = 200;
+    size_t res_height = 200;
+    double scale = 100;
     double t = 1.0;
-    std::function func = [](double x, double y, double t) { return NEOFX::radial(x, y, t, NEOFX::rainbow, 1.0, 1.0); };
-    auto result = NEOFX::batch_process_array(func, x, y, t);
+    double speed = 0.05;
+    std::chrono::steady_clock clock;
+
+    auto ramp = NEOFX::rainbow;
+    // NEOFX::ColorRamp ramp({NEOFX::black, NEOFX::red, NEOFX::black}, {0.0, 0.5, 1.0});
+    auto func = NEOFX::radial(ramp, 1, 1);
 
 
 
-    for (int i = 0; i < result.size(); i++ ) {
-        std::cout << result[i] << " ";
+    while (true){
+        t -= speed;
+        auto im = generate_image(func, res_width, res_height, scale, t);
+        cv::imshow("Display window", im);
+
+        if (cv::waitKeyEx(30) == 27) break;
     }
-    std::cout << "\n";
+    cv::destroyAllWindows();
+
+
+    // for (int i = 0; i < result.size(); i++ ) {
+    //     std::cout << result[i] << " ";
+    // }
+    // std::cout << "\n";
     return 0;
 }
