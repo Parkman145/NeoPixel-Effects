@@ -27,10 +27,13 @@ cv::Mat generate_image(std::function<NEOFX::RGB(double, double, double)> func, s
 
     cv::Mat output(res_width, res_height, type);  
 
+    double scale_x = scale * res_width;
+    double scale_y = scale * res_height;
+
     for (size_t i = 0; i < res_width; i++) {
-        double x = (static_cast<double>(i)-(res_width/2)) / scale;
+        double x = (static_cast<double>(i)-(res_width/2)) / scale_x ;
         for (size_t j = 0; j < res_height; j++) {
-        double y = (static_cast<double>(j)-(res_height/2)) / scale;
+        double y = (static_cast<double>(j)-(res_height/2)) / scale_y;
             NEOFX::RGB color = func(x, y, t);
             
             output.at<cv::Vec3d>(j, i) = cv::Vec3d(color.B, color.G, color.R);
@@ -47,7 +50,7 @@ cv::Mat generate_image(std::function<NEOFX::RGB(double, double, double)> func, s
 int main() {
     size_t res_width = 200;
     size_t res_height = 200;
-    double scale = 100;
+    double scale = 1;
     double t = 1.0;
     double speed = 0.05;
     std::chrono::steady_clock clock;
