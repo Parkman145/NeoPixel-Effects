@@ -91,8 +91,12 @@ struct radial {
     RGB operator()(double x, double y, double t) {
         double x_dist = x-center_x;
         double y_dist = y-center_y;
-        double distance = std::sqrtf(x_dist*x_dist+y_dist*y_dist);
-        return ramp[fmod(distance*scale+t*speed, 1)];
+        double distance = std::hypot(x_dist, y_dist);
+        double phase = t*speed;
+        double pos = distance*scale;
+        double where = fmod(pos+phase, 1);
+        if (where < 0) { where += 1; }
+        return ramp[where];
     }
 };
 
