@@ -34,7 +34,7 @@ class ColorRamp {
     // above and below the ramps bounds will be constrained to 
     // to the highest and lowest values
     RGB operator[](double location) const {
-        location = std::clamp(location, *locations.begin(), *(locations.end()-1));
+        location = std::max(*locations.begin(), std::min(*(locations.end()-1), location));
         
         // Finding index of location just above the input location
         auto upper_it = std::lower_bound(locations.begin(), locations.end(), location);
