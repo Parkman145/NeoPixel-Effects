@@ -20,7 +20,7 @@ if(BUILD_EXE)
     find_package(OpenCV REQUIRED)
     message(STATUS "OpenCV version: ${OpenCV_VERSION}")
     # Add executable
-    add_executable(main src/main.cpp)
+    add_executable(main example/main.cpp)
     target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/include)
     # Link OpenCV libraries
     target_link_libraries(main 
