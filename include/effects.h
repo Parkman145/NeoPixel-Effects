@@ -6,9 +6,9 @@
 #include <algorithm>
 #include <cmath>
 #include <functional>
-#include <numbers>
 
 namespace NEOFX {
+constexpr double pi = 3.14159265359;
 
 RGB red{1.0, 0.0, 0.0};
 RGB orange{1.0, 0.647, 0.0};
@@ -111,7 +111,7 @@ struct pinwheel {
     RGB operator()(double x, double y, double t) {
         double x_dist = x-center_x;
         double y_dist = y-center_y;
-        double angle = (std::atan2(x_dist, y_dist)+std::numbers::pi)/(2*std::numbers::pi);
+        double angle = (std::atan2(x_dist, y_dist)+pi)/(2*pi);
         double distance = std::hypot(x_dist, y_dist);
         double phase = t*speed;
         double pos = angle+phase+twist*distance;
