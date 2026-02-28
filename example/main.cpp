@@ -61,7 +61,8 @@ int main() {
     // auto ramp = NEOFX::ColorRamp({ NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black }, { 0.000, 0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000 });
     // NEOFX::ColorRamp ramp({NEOFX::black, NEOFX::red, NEOFX::black}, {0.0, 0.5, 1.0});
     auto ramp = NEOFX::rainbow;
-    auto func = NEOFX::pinwheel(ramp, 1, 1, 0, 0, 0.8);
+    // auto func = NEOFX::pinwheel(ramp, 1, 1, 0, 0, 0.8);
+    auto func = NEOFX::linear_gradient(ramp, 1, 1, 3.14/4);
 
 
 

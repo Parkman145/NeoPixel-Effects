@@ -121,6 +121,25 @@ struct pinwheel {
     }
 };
 
+struct linear_gradient {
+    ColorRamp ramp;
+    double speed;
+    double scale;
+    double angle = 0.0;
+    double center_x = 0.0;
+    double center_y = 0.0;
+    RGB operator()(double x, double y, double t) {
+        double x_dist = (x-center_x)*scale;
+        double y_dist = (y-center_y)*scale;
+        
+        double distance = x_dist*std::cos(-angle) - y_dist*std::sin(-angle);
+        double phase = t*speed;
+        double where = fmod(distance+phase, 1);
+        if (where < 0) { where += 1; }
+        return ramp[where];
+    }
+};
+
 std::vector<RGB> batch_process(
     std::function<RGB(double, double, double)> func, 
     std::vector<double> x, 
