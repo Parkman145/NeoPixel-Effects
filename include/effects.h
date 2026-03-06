@@ -84,11 +84,12 @@ struct cycle {
 };
 
 struct radial {
+    radial(ColorRamp ramp, double speed, double scale) : ramp{ramp}, speed{speed}, scale{scale}, center_x{0.0}, center_y{0.0} {};
     ColorRamp ramp;
     double speed;
     double scale;
-    double center_x = 0.0;
-    double center_y = 0.0;
+    double center_x;
+    double center_y;
     RGB operator()(double x, double y, double t) {
         double x_dist = x-center_x;
         double y_dist = y-center_y;
@@ -102,12 +103,15 @@ struct radial {
 };
 
 struct pinwheel {
+    pinwheel(ColorRamp ramp, double speed, double scale) : ramp{ramp}, speed{speed}, scale{scale}, center_x{0.0}, center_y{0.0}, twist{0.0} {};
+    pinwheel(ColorRamp ramp, double speed, double scale, double twist) : ramp{ramp}, speed{speed}, scale{scale}, center_x{0.0}, center_y{0.0}, twist{twist} {};
+
     ColorRamp ramp;
     double speed;
     double scale;
-    double center_x = 0.0;
-    double center_y = 0.0;
-    double twist = 0.0;
+    double center_x;
+    double center_y;
+    double twist;
     RGB operator()(double x, double y, double t) {
         double x_dist = x-center_x;
         double y_dist = y-center_y;
@@ -122,12 +126,16 @@ struct pinwheel {
 };
 
 struct linear_gradient {
+
+    linear_gradient(ColorRamp ramp, double speed, double scale) : ramp{ramp}, speed{speed}, scale{scale}, angle{0.0}, center_x{0.0}, center_y{0.0} {};
+    linear_gradient(ColorRamp ramp, double speed, double scale, double angle) : ramp{ramp}, speed{speed}, scale{scale}, angle{angle}, center_x{0.0}, center_y{0.0} {};
+
     ColorRamp ramp;
     double speed;
     double scale;
-    double angle = 0.0;
-    double center_x = 0.0;
-    double center_y = 0.0;
+    double angle;
+    double center_x;
+    double center_y;
     RGB operator()(double x, double y, double t) {
         double x_dist = (x-center_x)*scale;
         double y_dist = (y-center_y)*scale;
