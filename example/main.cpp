@@ -60,10 +60,12 @@ int main() {
 
     // auto ramp = NEOFX::ColorRamp({ NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black }, { 0.000, 0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000 });
     // NEOFX::ColorRamp ramp({NEOFX::black, NEOFX::red, NEOFX::black}, {0.0, 0.5, 1.0});
-    auto ramp = NEOFX::ColorRamp({NEOFX::black, NEOFX::blue, NEOFX::black}, {0.0, 0.025, 0.5});
-    // auto func = NEOFX::pinwheel(ramp, 1, 1, 0, 0, 0.8);
+    auto ramp = NEOFX::ColorRamp({NEOFX::black, NEOFX::white, NEOFX::black}, {0.0, 0.025, 0.5});
+    auto pinwheel = NEOFX::pinwheel(NEOFX::rainbow, 1, 1, 0);
 
-    auto func = NEOFX::chase(ramp, -0.5, 1.0, 1, 0.1);
+    auto chase = NEOFX::chase(ramp, -0.5, 1.0, 1, 0.1);
+
+    auto func = [pinwheel, chase](double x, double y, double t) -> NEOFX::RGB { return pinwheel(x, y, t) * chase(x, y, t); };
 
 
     while (true){
