@@ -71,13 +71,13 @@ ColorRamp rainbow{{red, orange, yellow, green, blue, purple, red}, {0.0, 0.16666
 
 struct solid {
     RGB color;
-    RGB operator()(double x, double y, double t){ return color; };
+    RGB operator()(double x, double y, double t) const { return color; };
 };
 
 struct cycle {
     ColorRamp ramp;
     double speed;
-    RGB operator()(double x, double y, double t) {
+    RGB operator()(double x, double y, double t) const {
         return ramp[std::fmod(t*speed, 1)];
     }
 
@@ -90,7 +90,7 @@ struct radial {
     double scale;
     double center_x;
     double center_y;
-    RGB operator()(double x, double y, double t) {
+    RGB operator()(double x, double y, double t) const {
         double x_dist = x-center_x;
         double y_dist = y-center_y;
         double distance = std::hypot(x_dist, y_dist);
@@ -112,7 +112,7 @@ struct pinwheel {
     double center_x;
     double center_y;
     double twist;
-    RGB operator()(double x, double y, double t) {
+    RGB operator()(double x, double y, double t) const {
         double x_dist = x-center_x;
         double y_dist = y-center_y;
         double angle = (std::atan2(x_dist, y_dist)+pi)/(2*pi);
@@ -136,7 +136,7 @@ struct linear_gradient {
     double angle;
     double center_x;
     double center_y;
-    RGB operator()(double x, double y, double t) {
+    RGB operator()(double x, double y, double t) const {
         double x_dist = (x-center_x)*scale;
         double y_dist = (y-center_y)*scale;
         
