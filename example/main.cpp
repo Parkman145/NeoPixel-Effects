@@ -6,6 +6,7 @@
 #include "effects.h"
 #include <string>
 #include <chrono>
+#include "effect_presets.h"
 
 template <typename T>
 cv::Mat Ndarray_to_Mat(const CNDA::Ndarray<T>& arr) {
@@ -61,12 +62,8 @@ int main() {
     // auto ramp = NEOFX::ColorRamp({ NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black, NEOFX::blue, NEOFX::black }, { 0.000, 0.125, 0.250, 0.375, 0.500, 0.625, 0.750, 0.875, 1.000 });
     // NEOFX::ColorRamp ramp({NEOFX::black, NEOFX::red, NEOFX::black}, {0.0, 0.5, 1.0});
     auto ramp = NEOFX::ColorRamp({NEOFX::black, NEOFX::white, NEOFX::black}, {0.0, 0.025, 0.5});
-    auto pinwheel = NEOFX::pinwheel(NEOFX::rainbow, 1, 1, 0);
 
-    auto chase = NEOFX::chase(ramp, -0.5, 1.0, 1, 0.1);
-
-    auto func = [pinwheel, chase](double x, double y, double t) -> NEOFX::RGB { return pinwheel(x, y, t) * chase(x, y, t); };
-
+    auto func = NEOFX::effect_presets::rainbow_chaser; 
 
     while (true){
         t -= speed/time_interval;
