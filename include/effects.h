@@ -148,6 +148,31 @@ struct linear_gradient {
     }
 };
 
+struct chase {
+
+    chase(ColorRamp ramp, double speed, double scale, double speed_multiplier, double band_width) : speed{speed}, scale{scale}, speed_multiplier{speed_multiplier}, band_width{band_width}, center_x{0.0}, center_y{0.0}, sub_func{pinwheel(ramp, 1.0, 1.0)} {};
+    chase(ColorRamp ramp, double speed, double scale, double speed_multiplier, double band_width, double center_x, double center_y) : speed{speed}, scale{scale}, speed_multiplier{speed_multiplier}, band_width{band_width}, center_x{center_x}, center_y{center_y}, sub_func{pinwheel(ramp, 1.0, 1.0)} {};
+
+
+    double speed;
+    double scale;
+    double speed_multiplier;
+    double band_width;
+    double center_x;
+    double center_y;
+    pinwheel sub_func;
+    RGB operator()(double x, double y, double t) const {
+        t = speed * t;
+        x = x - center_x;
+        y = y - center_y;
+        double distance = std::hypot(x, y);
+
+        distance = distance - fmod(distance, band_width);
+        return sub_func(x, y, t+t*distance*speed_multiplier);
+        
+    }
+};
+
 std::vector<RGB> batch_process(
     std::function<RGB(double, double, double)> func, 
     std::vector<double> x, 
